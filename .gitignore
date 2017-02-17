@@ -1,0 +1,9 @@
+.DS_Store
+*~
+*.sw[p|o]
+*.py[c|o]
+*.py~
+.virtualenv
+*.sqlite
+*.db
+.env

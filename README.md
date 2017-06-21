@@ -2,6 +2,8 @@
 
 This is a short introduction to the PubVis web application. For more details please see the accompanying paper. A demo of the app is running [here](https://pubvis.herokuapp.com/) (with PubMed articles about different cancer types) and [here](https://arxvis.herokuapp.com/) (with arXiv articles about machine learning).
 
+If you have any questions please don't hesitate to send me an [email](mailto:cod3licious@gmail.com) and of course if you should find any bugs or want to contribute other improvements, pull requests are very welcome!
+
 # Quick start
 To simply create the PubVis application from the paper, open a terminal and `cd` to this repository (i.e. you should be in the folder where `manage.py` lives). 
 

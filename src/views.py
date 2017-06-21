@@ -170,11 +170,14 @@ def keyword_search():
     # first see if we get matches in the title, else search the whole text
     items = Item.query.filter(Item.title.ilike("%%%s%%" % q)).limit(n).all()
     if not items:
-        # filtered by search terms (first try and, never or)
-        clauses = [Item.text.ilike('% {0} %'.format(k)) for k in preprocess_text(q).split()]
-        items = Item.query.filter(and_(*clauses)).limit(n).all()
-        # if not items:
-        #     items = Item.query.filter(or_(*clauses)).limit(n).all()
+        # maybe they were looking for an author?
+        items = Item.query.filter(Item.authors.ilike("%%%s%%" % q)).limit(n).all()
+        if not items:
+            # filtered by search terms (first try and, never or)
+            clauses = [Item.text.ilike('% {0} %'.format(k)) for k in preprocess_text(q).split()]
+            items = Item.query.filter(and_(*clauses)).limit(n).all()
+            # if not items:
+            #     items = Item.query.filter(or_(*clauses)).limit(n).all()
     return make_response(jsonify({"return": True, "items": [i.to_json() for i in items]}), 200)
 
 

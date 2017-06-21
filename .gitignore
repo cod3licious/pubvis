@@ -6,4 +6,3 @@
 .virtualenv
 *.sqlite
 *.db
-.env

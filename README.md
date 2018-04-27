@@ -2,6 +2,15 @@
 
 This is a short introduction to the PubVis web application. For more details please see the accompanying [paper](http://arxiv.org/abs/1706.08094). A demo of the app is running [here](https://pubvis.herokuapp.com/) (with PubMed articles about different cancer types) and [here](https://arxvis.herokuapp.com/) (with arXiv articles about machine learning).
 
+If any of this code was helpful for your research, please consider citing it: 
+
+    @article{horn2017pubvis,
+      title={Interactive Exploration and Discovery of Scientific Publications with PubVis},
+      author={Horn, Franziska},
+      journal={arXiv preprint arXiv:1706.08094},
+      year={2017}
+    }
+
 If you have any questions please don't hesitate to send me an [email](mailto:cod3licious@gmail.com) and of course if you should find any bugs or want to contribute other improvements, pull requests are very welcome!
 
 # Quick start

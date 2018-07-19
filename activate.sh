@@ -27,7 +27,7 @@ then
     mkdir -p .virtualenv
     cd .virtualenv 
     echo "Downloading $URL_BASE/virtualenv-$VERSION.tar.gz"
-    curl -s -O $URL_BASE/virtualenv-$VERSION.tar.gz
+    curl -s -LO $URL_BASE/virtualenv-$VERSION.tar.gz
     tar xvzf virtualenv-$VERSION.tar.gz
     # Create the first "bootstrap" environment.
     $PYTHON virtualenv-$VERSION/virtualenv.py $ENV_OPTS $INITIAL_ENV

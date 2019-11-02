@@ -8,7 +8,7 @@ flask-cors==2.1.2
 Jinja2==2.8
 Werkzeug==0.15.3
 gunicorn
-requests==2.11.1
+requests==2.20.0
 unidecode==0.04.19
 numpy==1.11.2
 scipy==0.18.1

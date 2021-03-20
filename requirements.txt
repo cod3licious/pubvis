@@ -5,7 +5,7 @@ flask-sqlalchemy==2.1
 flask-migrate==2.0.0
 Flask-SSLify==0.1.5
 flask-cors==2.1.2
-Jinja2==2.8
+Jinja2==2.11.3
 Werkzeug==0.15.3
 gunicorn
 requests==2.20.0

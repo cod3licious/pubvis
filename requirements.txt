@@ -10,7 +10,7 @@ Werkzeug==0.15.3
 gunicorn
 requests==2.20.0
 unidecode==0.04.19
-numpy==1.21.0
+numpy==1.22.0
 scipy==0.18.1
 bs4==0.0.1
 beautifulsoup4==4.4.1

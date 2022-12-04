@@ -1,4 +1,3 @@
-
 import json
 from datetime import datetime
 from . import db
@@ -15,7 +14,7 @@ class Rating(db.Model):
     rating = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
-        return '<Rating (%r, %r, %r)>' % (self.user_id, self.item_id, self.rating)
+        return f'<Rating ({self.user_id!r}, {self.item_id!r}, {self.rating!r})>'
 
 
 class User(db.Model):
@@ -56,7 +55,7 @@ class Similarity(db.Model):
     simscore = db.Column(db.Float, nullable=False)
 
     def __repr__(self):
-        return '<Similarity (%r, %r, %r)>' % (self.item_id1, self.item_id2, self.simscore)
+        return f'<Similarity ({self.item_id1!r}, {self.item_id2!r}, {self.simscore!r})>'
 
 
 class Item(db.Model):

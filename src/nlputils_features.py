@@ -1,4 +1,3 @@
-
 import re
 from math import log
 from collections import Counter
@@ -54,9 +53,9 @@ def get_bigram_scores(text_words, min_bgfreq=2.):
                 unigram_freq[word] = 1.
             if i:
                 try:
-                    bigram_freq["%s %s" % (wordlist[i - 1], word)] += 1.
+                    bigram_freq[f"{wordlist[i - 1]} {word}"] += 1.
                 except:
-                    bigram_freq["%s %s" % (wordlist[i - 1], word)] = 1.
+                    bigram_freq[f"{wordlist[i - 1]} {word}"] = 1.
     # compute bigram scores
     bigram_scores = {}
     for bigram in bigram_freq:
@@ -118,7 +117,7 @@ def compute_idf(docfeats):
     return norm_dict({term: log(N / len(termdocs[term])) for term in termdocs})
 
 
-class FeatureTransform(object):
+class FeatureTransform:
     """
     FeatureTransform
 

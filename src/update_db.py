@@ -152,7 +152,7 @@ class Fetch_pubmed(Command):
                             month = soup.find("PubmedArticleSet").find("PubmedArticle").find("PubmedData").find("History").find("PubMedPubDate").find("Month").get_text()
                             day = soup.find("PubmedArticleSet").find("PubmedArticle").find("PubmedData").find("History").find("PubMedPubDate").find("Day").get_text()
                         article_data["pub_date"] = datetime(int(year), int(month), int(day)).strftime('%Y-%m-%d')
-                        article_data["authors"] = ", ".join(["%s %s" % (a.find("ForeName").get_text(), a.find(
+                        article_data["authors"] = ", ".join(["{} {}".format(a.find("ForeName").get_text(), a.find(
                             "LastName").get_text()) for a in article_details.find("AuthorList").find_all("Author") if a.find("ForeName")])
                         # some have no abstract, but we can't use these anyways
                         article_data["description"] = article_details.find('Abstract').get_text()
@@ -212,7 +212,7 @@ class Fetch_arxiv(Command):
                         item_id = process_item(article_data)
                         n_articles_added += 1
                     except Exception as ex:
-                        print(("[ERROR] Fetch_arxiv: Something went wrong with article id '%s': %s" % (article_id, ex)))
+                        print(f"[ERROR] Fetch_arxiv: Something went wrong with article id '{article_id}': {ex}")
             print("[INFO] Fetch_arxiv: Processed %i articles." % n_articles_added)
             time.sleep(1)
         print("[INFO] Fetch_arxiv: Fetched %i articles. done." % n_articles_added)

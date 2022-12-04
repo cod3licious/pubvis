@@ -1,10 +1,10 @@
-from __future__ import division, unicode_literals
+
 import re
 from math import log
 from collections import Counter
 from scipy.sparse import csr_matrix, dok_matrix
 from unidecode import unidecode
-from nlputils_dict_utils import norm_dict, invert_dict1, invert_dict2, select_copy
+from .nlputils_dict_utils import norm_dict, invert_dict1, invert_dict2, select_copy
 
 
 def norm_whitespace(text):
@@ -14,7 +14,7 @@ def norm_whitespace(text):
 
 def preprocess_text(text, to_lower=True, norm_num=True):
     # clean the text: no fucked up characters, html, ...
-    if not isinstance(text, unicode):
+    if not isinstance(text, str):
         text = text.decode("utf-8")
     text = unidecode(text)
     text = re.sub(r"http(s)?://\S*", " ", text)  # remove links (other html crap is assumed to be removed by bs)

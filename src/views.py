@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from __future__ import unicode_literals
+
 import re
 import json
 import random
@@ -99,7 +99,7 @@ def process_item(item_data):
     """
     try:
         # additionally add the title + description to the text
-        text = preprocess_text("%s\n%s\n%s" % (item_data['title'], item_data['description'], item_data.get('text', '')))
+        text = preprocess_text(f"{item_data['title']}\n{item_data['description']}\n{item_data.get('text', '')}")
         # based on the id, check if the item already exists, else create it
         item = Item.query.get(item_data['item_id'])
         if not item:
@@ -122,7 +122,7 @@ def process_item(item_data):
             # if we already have a keyword we shouldn't overwrite it, it was handled from before
             item.keywords = norm_whitespace(item_data['keywords'])
     except Exception as e:
-        print("[ERROR]: Something went wrong extracting the data for item '%s': %s" % (unidecode(item_data['title']), e))
+        print(f"[ERROR]: Something went wrong extracting the data for item '{unidecode(item_data['title'])}': {e}")
         return 0
     db.session.add(item)
     db.session.commit()
@@ -174,7 +174,7 @@ def keyword_search():
         items = Item.query.filter(Item.authors.ilike("%%%s%%" % q)).limit(n).all()
         if not items:
             # filtered by search terms (first try and, never or)
-            clauses = [Item.text.ilike('% {0} %'.format(k)) for k in preprocess_text(q).split()]
+            clauses = [Item.text.ilike(f'% {k} %') for k in preprocess_text(q).split()]
             items = Item.query.filter(and_(*clauses)).limit(n).all()
             # if not items:
             #     items = Item.query.filter(or_(*clauses)).limit(n).all()
@@ -212,7 +212,7 @@ def similarity_search():
     # normalize, otherwise, together with the weighting too many are going to be just 0
     # item_scores = norm_dict(item_scores)
     # if ordered by the scores, item_scores gives the documents with the best matches
-    sorted_ids = sorted(item_scores.keys(), key=item_scores.get, reverse=True)[:n]
+    sorted_ids = sorted(list(item_scores.keys()), key=item_scores.get, reverse=True)[:n]
     items = []
     norm = sqrt(len(q))
     for aid in sorted_ids:

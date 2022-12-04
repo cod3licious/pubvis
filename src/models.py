@@ -1,4 +1,4 @@
-from __future__ import unicode_literals
+
 import json
 from datetime import datetime
 from . import db
@@ -105,7 +105,7 @@ class Item(db.Model):
         if self.publisher:
             item["publisher"] = self.publisher
         if self.authors:
-            item["authors"] = u", ".join(self.authors.split(", ")[:5])
+            item["authors"] = ", ".join(self.authors.split(", ")[:5])
             if len(self.authors.split(", ")) > 5:
                 item["authors"] += " et al."
         if full:

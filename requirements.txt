@@ -6,7 +6,7 @@ flask-migrate==2.0.0
 Flask-SSLify==0.1.5
 flask-cors==3.0.9
 Jinja2==2.11.3
-Werkzeug==0.15.3
+Werkzeug==2.2.3
 gunicorn
 requests==2.20.0
 unidecode==0.04.19

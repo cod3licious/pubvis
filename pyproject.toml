@@ -1,0 +1,139 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "pubvis"
+description = "FastAPI web app to explore a collection of texts"
+authors = ["Franziska Horn <cod3licious@gmail.com>"]
+license = "MIT"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11.6,<3.13"
+fastapi = {version = "^0.109.2", extras = ["all"]}
+matplotlib = "^3.7.2"
+numpy = "^1.23.5"
+joblib = "^1.3.2"
+scipy = "^1.9.3"
+scikit-learn = "^1.4.0"
+sqlmodel = "^0.0.16"
+
+[tool.poetry.group.dev.dependencies]
+bandit = "^1.7.7"
+beautifulsoup4 = "^4.12.3"
+feedparser = "^6.0.11"
+ipython = ">=8.0.0"
+lxml = "^5.1.0"
+mypy = "^1.7.1"
+poethepoet = ">=0.24.4"
+pytest = "^7.4.0"
+pyupgrade = "^3.9.0"
+requests = "^2.31.0"
+ruff = ">=0.2.1"
+
+
+[tool.poe.tasks]
+# run with `poetry run poe format`
+format = "bash -c 'pyupgrade --py311-plus $(find **/*.py) && ruff check --fix . && ruff format .'"
+check = "bash -c 'ruff check . && mypy src && bandit -c pyproject.toml -r .'"
+test = "bash -c 'pytest tests'"
+
+
+[tool.ruff]
+target-version = "py311"
+line-length = 128
+
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".eggs",
+    ".git",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".venv",
+    "__pypackages__",
+    "__pycache__",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+select = ["A", "B", "C4", "D", "E", "F", "G", "I", "N", "Q", "W", "COM", "DTZ", "FA", "ICN", "INP", "PIE", "PD", "PL", "RSE", "RET", "RUF", "SIM", "SLF", "UP"]
+
+# Allow autofix for all enabled rules (when `--fix`) is provided.
+fixable = ["C4", "D", "E", "G", "I", "Q", "W", "COM", "PD", "RSE", "RET", "RUF", "SIM", "SLF", "UP"]
+# Avoid trying to fix flake8-bugbear (`B`) violations.
+unfixable = ["B", "F841"]
+
+# Ignore a few rules that we consider too strict.
+ignore = ["E501", # Line too long
+    "E741", # Ambiguous variable name: `l`
+    "PD901", # 'df' is a bad variable name
+    "N999", # Invalid module name: '🏠_Home'
+    "N802", "N803", "N806", # names should be lowercase
+    "D1",  # D100 - D107: Missing docstrings
+    "D200", # One-line docstring should fit on one line
+    "D212", # Multi-line docstring summary should start at the second line
+    "D400", # adds a period at the end of line (problematic when it is a path)
+    "D415", # First line should end with a period, question mark, or exclamation point
+    "D203", "D204", "D205", # required blank lines
+    "G004", # Logging statement uses f-string
+    "PIE790", # Unnecessary `pass` statement
+    "PLR2004", # Magic value used in comparison, consider replacing 0.999 with a constant variable
+    "PLR09", # Too many arguments to function call
+    "COM812", # trailing comma - don't use together with formatter
+    "PLW0603", # Using the global statement to update `NN_TREE` is discouraged
+    "B008", # only here: function call `Depends` in argument defaults - FastAPI specific
+]
+
+# Ignore `E402` (import violations) in all `__init__.py` files, and in `path/to/file.py`.
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+known-first-party = ["src", "src.*"]
+section-order = ["future", "standard-library", "third-party", "first-party", "tests", "local-folder"]
+
+[tool.ruff.lint.isort.sections]
+"tests" = ["tests"]
+
+[tool.ruff.lint.flake8-import-conventions]
+
+[tool.mypy]
+plugins = ["numpy.typing.mypy_plugin"]
+
+[[tool.mypy.overrides]]
+module = [
+    "pandas.*",
+    "sklearn.*",
+    "joblib.*",
+    "scipy.*",
+    "numpy",
+    "numba",
+    "pandas.*",
+    "streamlit.*",
+    "matplotlib.*",
+    "IPython.*",
+    "plotly.*",
+    "seaborn.*",
+    "requests.*",
+    "sqlalchemy.*",
+    "feedparser.*",
+]
+ignore_missing_imports = true
+
+[tool.bandit]
+targets = ["src/"]
+recursive = true
+skips = ["B101"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--disable-warnings"
+markers = ["slow"]

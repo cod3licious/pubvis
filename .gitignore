@@ -1,8 +1,14 @@
 .DS_Store
 *~
+.env
 *.sw[p|o]
 *.py[c|o]
 *.py~
 .virtualenv
 *.sqlite
 *.db
+*.sublime-project
+*.sublime-workspace
+raw_texts/
+src/static/assets/
+src/static/json/

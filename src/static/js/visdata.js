@@ -34,12 +34,6 @@ function displayGraph()
   var w = $( window ).width();
   var h = $( window ).height();
 
-  //Padding
-  // var left_padding = 20;
-  // var right_padding = 20;
-  // var top_padding = 20;
-  // var bottom_padding = 20;
-
   //Key function
   var key = function(d) {
     return d["item_id"];
@@ -60,7 +54,6 @@ function displayGraph()
     .attr("width", w)
     .attr("height", h)
     .append("g");
-    // .call(d3.behavior.zoom().x(xScale).y(yScale).size([w,h]).scaleExtent([0.1, 15]).on("zoom", zoom));
 
   svg.append("rect")
     .attr("class", "overlay")
@@ -85,15 +78,6 @@ function displayGraph()
     .attr("stroke", "black")
     .attr("stroke-width", 0.1)
     .attr("opacity", 0.4);
-    //.attr("transform", transform);
-
-  function zoom() {
-    circles.attr("transform", transform);
-  }
-
-  function transform(d) {
-    return "translate(" + xScale(d["x"]) + "," + yScale(d["y"]) + ")";
-  }
 
   //Include mouseover effects
   circles.on("mouseover", function(d) {
@@ -117,7 +101,6 @@ function displayGraph()
   })
   .on("click", function(d) {
     //go to the document's page
-    //window.location = "/article/"+d['item_id'];
     loadArticle(d['item_id']);
   });
 }

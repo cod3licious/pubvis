@@ -4,7 +4,7 @@ var searchResultsVisible = false;
 
 function randomUserId()
 {
-  var timestamp = +new Date();
+  var timestamp = new Date().getTime();
   var userId = 'u' + timestamp + Math.random();
   $.cookie("userId", userId);
   return userId;
@@ -15,7 +15,7 @@ function rateArticle(rating)
   $('.article-like').addClass('rated');
   $.ajax({
     dataType: "json",
-    url: "/add_rating",
+    url: "/ratings",
     method: "post",
     data: JSON.stringify( {
       item_id: currentArticle,
@@ -93,43 +93,17 @@ function hideSearchResults()
   searchResultsVisible = false;
 };
 
-// function updateArticle(pbId)
-// {
-//   d3.selectAll(".sa-appear")
-//     .transition()
-//     .duration(250)
-//     .delay(function(d, i) { return i * 100; })
-//     .style("transform", 'translate(-100%, 0)');
-
-//   setTimeout(function() {
-//     renderSimilarArticles([
-//         { id: '13', title: 'Lorem ipsum', publisher: 'Lorem ipsum dolor sit amet', pub_year: 2005, authors: "Franziska Horn" },
-//         { id: '14', title: 'Lorem ipsum', publisher: 'Lorem ipsum dolor sit amet', pub_year: 2005, authors: "Franziska Horn" },
-//         { id: '15', title: 'Lorem ipsum', publisher: 'Lorem ipsum dolor sit amet', pub_year: 2005, authors: "Franziska Horn" },
-//         { id: '16', title: 'Lorem ipsum', publisher: 'Lorem ipsum dolor sit amet', pub_year: 2005, authors: "Franziska Horn" }
-//     ]);
-
-//     d3.selectAll(".sa-appear")
-//       .transition()
-//       .duration(500)
-//       .delay(function(d, i) { return i * 100; })
-//       .style("transform", 'translate(0, 0)');
-//   }, $('.sa-appear').length * 250 + 100);
-// };
-
 function loadArticle(item_id, type)
 {
-  $.getJSON("/item/" + encodeURIComponent(item_id), function( data ) {
-    renderArticleData(data.item)
+  $.getJSON("/items/" + encodeURIComponent(item_id), function( data ) {
+    renderArticleData(data)
   });
 
   if (type != 'compare' && type != 'recommendation')
   {
     setArticleListHeader('Similar articles');
-    $.getJSON("/similar/" + encodeURIComponent(item_id), function( data ) {
-      renderSimilarArticles(data.items);
-      // console.debug(data.items);
-
+    $.getJSON("/items/" + encodeURIComponent(item_id) + "/similar/", function( data ) {
+      renderSimilarArticles(data);
       $('.article').addClass('visible');
     });
   }
@@ -142,32 +116,15 @@ function renderSimilarArticles(results, type)
   var html = [];
   for (var i = 0; i < results.length; i++)
   {
-    var score = 0;
-    var donutScore = 0;
-    switch (type)
-    {
-      case 'compare':
-      case 'recommendation':
-        score = results[i]['score'];
-        break;
-
-      default:
-        score = results[i]['simscore'];
-        break;
-    }
+    var score = results[i]['score'] ? results[i]['score'].toFixed(1) : 0;
     html.push('<div class="similar-article sa-appear" id="article-' +
       results[i]['item_id'] + '" data-type="' + type + '">');
 
     if (type != 'recommendation')
     {
-      html.push('<div class="similar-article-donut">' + score +
-        '/100</div>');
-      html.push('<div class="similar-article-score">' + score +
-        '%</div>');
+      html.push('<div class="similar-article-donut">' + score + '/100</div>');
+      html.push('<div class="similar-article-score">' + score + '%</div>');
     }
-
-
-
 
     html.push('<div class="similar-article-hd">' + results[i]['title'] +
       '</div>');
@@ -194,12 +151,12 @@ function compareArticle(text)
   }
   $.ajax({
     dataType: "json",
-    url: "/search_similar",
+    url: "/items/similar",
     method: "post",
     data: JSON.stringify( {q: text}),
     contentType:"application/json; charset=utf-8",
     success: function(data) {
-      renderSimilarArticles(data.items, 'compare');
+      renderSimilarArticles(data, 'compare');
     }
   });
 }
@@ -224,12 +181,11 @@ function showRecommendedArticles()
   $('.similar-articles-bd')[0].innerHTML = '<span class="loading">loading...</span>';
   $.ajax({
     dataType: "json",
-    url: "/recommendation/" + userId,
+    url: "/users/" + userId + "/recommendations",
     method: "get",
     contentType:"application/json; charset=utf-8",
     success: function(data) {
-
-      renderSimilarArticles(data.items, 'recommendation');
+      renderSimilarArticles(data, 'recommendation');
     }
   });
 

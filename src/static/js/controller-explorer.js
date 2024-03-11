@@ -4,8 +4,8 @@
 $('.article-search').on('keyup', function(e) {
   var value = e.target.value;
 
-  $.getJSON("/search?q=" + encodeURIComponent(value), function( data ) {
-    showSearchResults(data.items);
+  $.getJSON("/items/search?q=" + encodeURIComponent(value), function( data ) {
+    showSearchResults(data);
   });
 });
 

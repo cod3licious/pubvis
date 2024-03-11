@@ -3,6 +3,8 @@ import os
 
 from sqlmodel import Field, Relationship, SQLModel, create_engine
 
+from src import SOURCE
+
 
 class Rating(SQLModel, table=True):
     user_id: str = Field(primary_key=True, foreign_key="user.user_id")
@@ -36,7 +38,7 @@ class Item(SQLModel, table=True):
     )
 
 
-SQLALCHEMY_DATABASE_URL = os.environ.get("DATABASE_URL") or "sqlite:///src/static/assets/database.db"
+SQLALCHEMY_DATABASE_URL = os.environ.get("DATABASE_URL") or f"sqlite:///src/static/assets/{SOURCE}/database.db"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=False)
 

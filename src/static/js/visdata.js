@@ -5,7 +5,7 @@ var loading = {
 };
 
 //Load the data and visualize
-$.getJSON( "static/json/item_info.json", function( data ) {
+$.getJSON( "static_json_item_info", function( data ) {
   article_info = data;
   displayGraph();
   $('.preloader').remove();
@@ -17,7 +17,7 @@ function displayGraph()
   if (!dataset && !loading.dataset)
   {
     loading.dataset = true;
-    $.getJSON( "static/json/xyc.json", function( data ) {
+    $.getJSON( "static_json_xyc", function( data ) {
       dataset = data;
       loading.dataset = false;
       displayGraph();

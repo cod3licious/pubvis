@@ -31,7 +31,7 @@ poetry shell
 poetry run poe test
 ```
 
-4.) Optional: By default we're working with PubMed articles; if you want to work with arXiv articles instead, set `LABEL = "arxiv"` in `src/main.py`.
+4.) Optional: By default we're working with PubMed articles; if you want to work with arXiv articles instead, set `SOURCE = "arxiv"` in `src/__init__.py`.
 
 5.) Download the articles (either from pubmed or arxiv):
 ```

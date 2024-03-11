@@ -36,12 +36,12 @@ def _item_data_to_json(item_data):
     return item_json
 
 
-def setup_db(json_dir="raw_texts/pubmed"):
+def setup_db(source="pubmed"):
     """Populate database and create artifacts based on given jsons"""
     # load all jsons
     logging.info("[setup_db]: loading jsons")
     items_data = []
-    for json_path in glob(os.path.join(json_dir, "*.json")):
+    for json_path in glob(f"raw_texts/{source}/*.json"):
         with open(json_path) as f:
             items_data.append(json.load(f))
 
@@ -68,14 +68,14 @@ def setup_db(json_dir="raw_texts/pubmed"):
 
     # save vectorizer and search tree for endpoint later
     logging.info("[setup_db]: saving artifacts")
-    label = json_path.split("/")[-2]
-    os.makedirs("src/static/assets/", exist_ok=True)
-    joblib.dump(vectorizer, f"src/static/assets/{label}_vectorizer.pkl")
-    joblib.dump(nn, f"src/static/assets/{label}_nn.pkl")
+    os.makedirs(f"src/static/assets/{source}", exist_ok=True)
+    joblib.dump(vectorizer, f"src/static/assets/{source}/vectorizer.pkl")
+    joblib.dump(nn, f"src/static/assets/{source}/nn_tree.pkl")
 
     # save item json for frontend
     logging.info("[setup_db]: saving jsons for frontend")
-    with open("src/static/json/item_info.json", "w") as f:
+    os.makedirs(f"src/static/json/{source}", exist_ok=True)
+    with open(f"src/static/json/{source}/item_info.json", "w") as f:
         f.write(json.dumps({i["item_id"]: _item_data_to_json(i) for i in items_data}))
 
     # for colors and coordinates we first need to create a color map based on the keywords
@@ -95,7 +95,7 @@ def setup_db(json_dir="raw_texts/pubmed"):
         }
         for i, idata in enumerate(items_data)
     ]
-    with open("src/static/json/xyc.json", "w") as f:
+    with open(f"src/static/json/{source}/xyc.json", "w") as f:
         f.write(json.dumps(xyc_json))
 
     # save items with all additional fields in DB
@@ -116,8 +116,8 @@ def setup_db(json_dir="raw_texts/pubmed"):
 
 
 if __name__ == "__main__":
-    from src.main import LABEL
+    from src import SOURCE
 
-    if LABEL not in ("pubmed", "arxiv"):
-        raise RuntimeError(f"Unknown LABEL: {LABEL} - use 'pubmed' or 'arxiv' instead.")
-    setup_db(json_dir=f"raw_texts/{LABEL}")
+    if SOURCE not in ("pubmed", "arxiv"):
+        raise RuntimeError(f"Unknown SOURCE: {SOURCE} - use 'pubmed' or 'arxiv' instead.")
+    setup_db(SOURCE)

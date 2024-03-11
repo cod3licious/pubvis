@@ -6,12 +6,12 @@ from pydantic import BaseModel
 from sqlalchemy import func
 from sqlmodel import Session, col, or_, select
 
+from src import SOURCE
 from src.db import Item, Rating, User, engine
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="src/static"), name="static")
 
-LABEL = "pubmed"
 VECTORIZER = None
 NN_TREE = None
 
@@ -59,14 +59,14 @@ def get_session():
 def get_vectorizer():
     global VECTORIZER
     if VECTORIZER is None:
-        VECTORIZER = joblib.load(f"src/static/assets/{LABEL}_vectorizer.pkl")
+        VECTORIZER = joblib.load(f"src/static/assets/{SOURCE}/vectorizer.pkl")
     yield VECTORIZER
 
 
 def get_nn_tree():
     global NN_TREE
     if NN_TREE is None:
-        NN_TREE = joblib.load(f"src/static/assets/{LABEL}_nn.pkl")
+        NN_TREE = joblib.load(f"src/static/assets/{SOURCE}/nn_tree.pkl")
     yield NN_TREE
 
 
@@ -88,6 +88,16 @@ def get_health():
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
     return FileResponse("src/static/favicon.ico")
+
+
+@app.get("/static_json_item_info", include_in_schema=False)
+async def precomputed_item_info_json():
+    return FileResponse(f"src/static/json/{SOURCE}/item_info.json")
+
+
+@app.get("/static_json_xyc", include_in_schema=False)
+async def precomputed_xyc_json():
+    return FileResponse(f"src/static/json/{SOURCE}/xyc.json")
 
 
 @app.get("/items/random", response_model=list[ItemViewModel])

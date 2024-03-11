@@ -136,7 +136,7 @@ def download_arxiv(json_dir="raw_texts/arxiv", max_articles=10000):
     for i in range(start_index, max_index, results_per_iteration):
         # get all articles
         arxiv_url = arxiv_baseurl + f"&start={i}&max_results={results_per_iteration}"
-        urlreq = urllib.request.Request(arxiv_url, None, {"User-Agent": f"python-arxiv{randint(100, 999)}"})
+        urlreq = urllib.request.Request(arxiv_url, None, {"User-Agent": f"python-arxiv{randint(i, i+100)}"})
         response = urllib.request.urlopen(urlreq).read()
         parse = feedparser.parse(response)
         if not parse.entries:
@@ -173,11 +173,11 @@ def download_arxiv(json_dir="raw_texts/arxiv", max_articles=10000):
 
 
 if __name__ == "__main__":
-    from src.main import LABEL
+    from src import SOURCE
 
-    if LABEL == "pubmed":
+    if SOURCE == "pubmed":
         download_pubmed()
-    elif LABEL == "arxiv":
+    elif SOURCE == "arxiv":
         download_arxiv()
     else:
-        raise RuntimeError(f"Unknown LABEL: {LABEL} - use 'pubmed' or 'arxiv' instead.")
+        raise RuntimeError(f"Unknown SOURCE: {SOURCE} - use 'pubmed' or 'arxiv' instead.")

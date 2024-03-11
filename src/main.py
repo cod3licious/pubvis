@@ -2,6 +2,7 @@ import joblib
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy import func
 from sqlmodel import Session, col, or_, select
@@ -10,6 +11,15 @@ from src import SOURCE
 from src.db import Item, Rating, User, engine
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.mount("/static", StaticFiles(directory="src/static"), name="static")
 
 VECTORIZER = None

@@ -6,9 +6,8 @@
 *.py~
 .virtualenv
 *.sqlite
-*.db
 *.sublime-project
 *.sublime-workspace
 raw_texts/
-src/static/assets/
-src/static/json/
+src/static/assets/arxiv
+src/static/json/arxiv

@@ -1,6 +1,6 @@
 # READ ME
 
-This is a short introduction to the PubVis web application. For more details please see the accompanying [paper](http://arxiv.org/abs/1706.08094). A demo of the app is running [here](https://pubvis.herokuapp.com/) (with PubMed articles about different cancer types) and [here](https://arxvis.herokuapp.com/) (with arXiv articles about machine learning).
+This is a short introduction to the PubVis web application. For more details please see the accompanying [paper](http://arxiv.org/abs/1706.08094). A demo of the app is running [here](https://pubvis.onrender.com) (with PubMed articles about different cancer types) and [here](https://arxvis.onrender.com) (with arXiv articles about machine learning).
 
 If any of this code was helpful for your research, please consider citing it:
 

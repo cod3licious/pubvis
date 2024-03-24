@@ -9,5 +9,4 @@
 *.sublime-project
 *.sublime-workspace
 raw_texts/
-src/static/assets/arxiv
-src/static/json/arxiv
+assets/arxiv

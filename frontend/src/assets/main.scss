@@ -1,0 +1,19 @@
+@use "base";
+
+#app {
+    min-height: 100vh;
+    margin: 0 auto;
+    font-weight: normal;
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}

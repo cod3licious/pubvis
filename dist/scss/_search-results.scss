@@ -1,0 +1,43 @@
+.search-results {
+  left: 0;
+  position: absolute;
+  top: 50px;
+  width: 800px;
+  z-index: 1200;
+  transition: transform 0.5s;
+}
+
+.search-result {
+  background: #fff;
+  box-shadow: 0 0 1px 1px rgba(0,0,0,0.1);
+  color: #000;
+  cursor: pointer;
+  display: block;
+  margin-top: 1px;
+  padding: 10px 25px;
+  transition: transform 0.5s;
+  transform: translate(-100%, 0);
+  &.visible {
+    transform: translate(0, 0);
+  }
+
+  &:hover {
+    background: #0099d3;
+    color: #fff;
+
+    .search-result-title {
+      color: #fff;
+    }
+  }
+}
+
+.search-result-title {
+  color: #0099d3;
+  font-weight: 300;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.search-result-authors {
+  display: block;
+}

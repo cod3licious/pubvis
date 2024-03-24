@@ -10,7 +10,6 @@ from src import SOURCE
 from src.db import Item, Rating, User, engine
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="src/static"), name="static")
 
 VECTORIZER = None
 NN_TREE = None
@@ -59,25 +58,25 @@ def get_session():
 def get_vectorizer():
     global VECTORIZER
     if VECTORIZER is None:
-        VECTORIZER = joblib.load(f"src/static/assets/{SOURCE}/vectorizer.pkl")
+        VECTORIZER = joblib.load(f"assets/{SOURCE}/vectorizer.pkl")
     yield VECTORIZER
 
 
 def get_nn_tree():
     global NN_TREE
     if NN_TREE is None:
-        NN_TREE = joblib.load(f"src/static/assets/{SOURCE}/nn_tree.pkl")
+        NN_TREE = joblib.load(f"assets/{SOURCE}/nn_tree.pkl")
     yield NN_TREE
 
 
 @app.get("/", include_in_schema=False)
 async def read_index():
-    return FileResponse("src/static/html/index.html")
+    return FileResponse("dist/index.html")
 
 
 @app.get("/about", include_in_schema=False)
 async def read_about():
-    return FileResponse("src/static/html/about.html")
+    return FileResponse("dist/about.html")
 
 
 @app.get("/health", include_in_schema=False)
@@ -87,17 +86,17 @@ def get_health():
 
 @app.get("/favicon.ico", include_in_schema=False)
 async def favicon():
-    return FileResponse("src/static/favicon.ico")
+    return FileResponse("dist/favicon.ico")
 
 
 @app.get("/static_json_item_info", include_in_schema=False)
 async def precomputed_item_info_json():
-    return FileResponse(f"src/static/json/{SOURCE}/item_info.json")
+    return FileResponse(f"assets/{SOURCE}/item_info.json")
 
 
 @app.get("/static_json_xyc", include_in_schema=False)
 async def precomputed_xyc_json():
-    return FileResponse(f"src/static/json/{SOURCE}/xyc.json")
+    return FileResponse(f"assets/{SOURCE}/xyc.json")
 
 
 @app.get("/items/random", response_model=list[ItemViewModel])
@@ -242,3 +241,6 @@ def add_rating(rating_body: RatingRequestBody, session: Session = Depends(get_se
     session.add(rating)
 
     session.commit()
+
+    
+app.mount("/", StaticFiles(directory="dist", html=True))

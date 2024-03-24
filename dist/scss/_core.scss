@@ -1,0 +1,84 @@
+html, body {
+  height: 100%;
+}
+body            { background: #0c0e13; color: #fff; height: 100%; font-family: Lato, sans-serif; font-weight: 100; margin: 0; padding: 0; line-height: 1.4; }
+input            { font-family: Lato, sans-serif; font-weight: 300; }
+a, h1, h2       { color: #377ba8; }
+
+#page {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.about {
+  bottom: 10px;
+  color: #ccc;
+  font-size: 11px;
+  position: absolute;
+  right: 10px;
+  a {
+    color: #ccc;
+    text-decoration: none;
+  }
+}
+
+.map {
+  left: 0;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.metanav {
+  bottom: 5px;
+  font-size: 0.8rem;
+  position: absolute;
+  right: 10px;
+}
+.metanav a {
+  color: #fff;
+  text-decoration: none;
+}
+.meta-nav a:hover {
+  color: #ddd;
+}
+
+.compare-link {
+  background: transparent url(../img/compare.svg) no-repeat;
+  background-size: 25px 25px;
+  color: #fff;
+  height: 25px;
+  font-size: 0.8rem;
+  right: 15px;
+  padding-left: 32px;
+  padding-top: 2px;
+  position: absolute;
+  text-decoration: none;
+  top: 23px;
+  white-space: nowrap;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+
+.close {
+  background: transparent url(../img/close.svg) no-repeat;
+  background-size: 70px 70px;
+  cursor: pointer;
+  height: 70px;
+  position: fixed;
+  right: 0;
+  width: 70px;
+  top: 60px;
+  transition: transform 0.218s;
+  &:hover {
+    // background-color: #efefef;
+    transform: scale(1.1);
+  }
+}

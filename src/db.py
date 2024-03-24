@@ -38,7 +38,7 @@ class Item(SQLModel, table=True):
     )
 
 
-SQLALCHEMY_DATABASE_URL = os.environ.get("DATABASE_URL") or f"sqlite:///src/static/assets/{SOURCE}/database.db"
+SQLALCHEMY_DATABASE_URL = os.environ.get("DATABASE_URL") or f"sqlite:///assets/{SOURCE}/database.db"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=False)
 

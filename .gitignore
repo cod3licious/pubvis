@@ -9,5 +9,4 @@
 *.sublime-project
 *.sublime-workspace
 raw_texts/
-src/static/assets/pubmed
-src/static/json/pubmed
+assets/pubmed

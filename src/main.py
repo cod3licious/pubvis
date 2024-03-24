@@ -1,5 +1,6 @@
 import joblib
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -10,6 +11,14 @@ from src import SOURCE
 from src.db import Item, Rating, User, engine
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 VECTORIZER = None
 NN_TREE = None
@@ -69,24 +78,9 @@ def get_nn_tree():
     yield NN_TREE
 
 
-@app.get("/", include_in_schema=False)
-async def read_index():
-    return FileResponse("dist/index.html")
-
-
-@app.get("/about", include_in_schema=False)
-async def read_about():
-    return FileResponse("dist/about.html")
-
-
 @app.get("/health", include_in_schema=False)
 def get_health():
     return "alive"
-
-
-@app.get("/favicon.ico", include_in_schema=False)
-async def favicon():
-    return FileResponse("dist/favicon.ico")
 
 
 @app.get("/static_json_item_info", include_in_schema=False)
@@ -242,5 +236,5 @@ def add_rating(rating_body: RatingRequestBody, session: Session = Depends(get_se
 
     session.commit()
 
-    
-app.mount("/", StaticFiles(directory="dist", html=True))
+
+app.mount("/", StaticFiles(directory="frontend/dist", html=True))

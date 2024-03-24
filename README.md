@@ -44,7 +44,14 @@ This will create a folder `raw_texts/pubmed` inside the pubvis folder in which t
 python src/utils/setup.py
 ```
 
-7.) Run the FastAPI app locally:
+7.) Install frontend dependencies and build (create dist folder; requires node.js and npm installation):
+```
+cd fronted
+npm i
+npm run build
+```
+
+8.) Run the FastAPI app locally (from the root folder):
 ```
 uvicorn src.main:app --reload
 ```

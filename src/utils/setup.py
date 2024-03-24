@@ -68,14 +68,14 @@ def setup_db(source="pubmed"):
 
     # save vectorizer and search tree for endpoint later
     logging.info("[setup_db]: saving artifacts")
-    os.makedirs(f"src/static/assets/{source}", exist_ok=True)
-    joblib.dump(vectorizer, f"src/static/assets/{source}/vectorizer.pkl")
-    joblib.dump(nn, f"src/static/assets/{source}/nn_tree.pkl")
+    os.makedirs(f"assets/{source}", exist_ok=True)
+    joblib.dump(vectorizer, f"assets/{source}/vectorizer.pkl")
+    joblib.dump(nn, f"assets/{source}/nn_tree.pkl")
 
     # save item json for frontend
     logging.info("[setup_db]: saving jsons for frontend")
-    os.makedirs(f"src/static/json/{source}", exist_ok=True)
-    with open(f"src/static/json/{source}/item_info.json", "w") as f:
+    os.makedirs(f"assets/{source}", exist_ok=True)
+    with open(f"assets/{source}/item_info.json", "w") as f:
         f.write(json.dumps({i["item_id"]: _item_data_to_json(i) for i in items_data}))
 
     # for colors and coordinates we first need to create a color map based on the keywords
@@ -95,7 +95,7 @@ def setup_db(source="pubmed"):
         }
         for i, idata in enumerate(items_data)
     ]
-    with open(f"src/static/json/{source}/xyc.json", "w") as f:
+    with open(f"assets/{source}/xyc.json", "w") as f:
         f.write(json.dumps(xyc_json))
 
     # save items with all additional fields in DB

@@ -102,7 +102,7 @@ function loadArticle(item_id, type)
   if (type != 'compare' && type != 'recommendation')
   {
     setArticleListHeader('Similar articles');
-    $.getJSON("/items/" + encodeURIComponent(item_id) + "/similar/", function( data ) {
+    $.getJSON("/items/" + encodeURIComponent(item_id) + "/similar", function( data ) {
       renderSimilarArticles(data);
       $('.article').addClass('visible');
     });

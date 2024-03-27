@@ -109,7 +109,6 @@ function openItem(newItem: Article) {
 </template>
 
 <style scoped lang="scss">
-
 .root-container {
     display: flex;
     flex-direction: row;

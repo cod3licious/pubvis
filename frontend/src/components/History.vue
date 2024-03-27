@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
 import ItemDetail from "@/components/ItemDetail.vue";
 import ItemList from "@/components/ItemList.vue";
 import { useHistoryStore } from "@/components/utils/DependencyInjection";

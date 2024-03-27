@@ -10,8 +10,8 @@ export class HistoryStore {
     }
 
     push(item: Article) {
-        const history = this.get();
-        history.push(item);
+        const history = this.get().filter((article: Article) => article.item_id !== item.item_id);
+        history.unshift(item);
         this.store.setItem(this.key, JSON.stringify(history));
     }
 

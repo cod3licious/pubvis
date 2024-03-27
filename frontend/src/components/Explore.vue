@@ -4,7 +4,7 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import type { Article, LoadingState } from "@/components/models/types";
 import { fetchData } from "@/components/utils/helpers";
-import { useHistoryStore, useHostname } from "@/main";
+import { useHistoryStore, useHostname } from "@/components/utils/DependencyInjection";
 
 const router = useRouter();
 const historyStore = useHistoryStore();
@@ -63,7 +63,6 @@ function displayGraph(articleInfo: Record<string, Article>, mapPoints: MapDataPo
     const yMin = d3.min(mapPoints, (d: MapDataPoint) => d.y)! - offset;
     const yMax = d3.max(mapPoints, (d: MapDataPoint) => d.y)! + offset;
     const yRange = yMax - yMin;
-    console.log(`${mapWidth}, ${mapHeight}`);
 
     // Create SVG element
     const svg = d3.select(mapRefValue).append("svg").attr("preserveAspectRatio", "none").attr("viewBox", `0 0 ${mapWidth} ${mapHeight}`).append("g");
@@ -125,10 +124,11 @@ function displayGraph(articleInfo: Record<string, Article>, mapPoints: MapDataPo
     </main>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 main {
     width: 100%;
     height: 100vh;
+    position: relative;
 }
 
 .map-container {
@@ -159,30 +159,30 @@ main {
 #tooltip {
     background: #11151d;
     font-size: 0.9rem;
-    position: sticky;
+    position: absolute;
     width: 100%;
     transition: bottom 0.5s;
     padding: 20px;
     bottom: 0;
     pointer-events: none;
-}
 
-#tooltip #journal {
-    font-size: 0.65rem;
-    font-style: italic;
-}
+    #journal {
+        font-size: 0.65rem;
+        font-style: italic;
+    }
 
-#tooltip h4 {
-    max-width: 540px;
-    margin: 0 auto 11px;
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: #fff;
-}
+    h4 {
+        max-width: 540px;
+        margin: 0 auto 11px;
+        font-size: 0.8rem;
+        font-weight: 400;
+        color: #fff;
+    }
 
-#tooltip p {
-    max-width: 540px;
-    margin: 0 auto;
-    font-size: 0.675rem;
+    p {
+        max-width: 540px;
+        margin: 0 auto;
+        font-size: 0.675rem;
+    }
 }
 </style>

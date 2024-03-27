@@ -1,7 +1,8 @@
 import "./assets/main.scss";
 
-import { createApp, inject, type InjectionKey } from "vue";
+import { createApp } from "vue";
 import { createRouter, createWebHashHistory } from "vue-router";
+import VueCookies from "vue-cookies";
 import App from "./App.vue";
 import Explore from "@/components/Explore.vue";
 import About from "@/components/About.vue";
@@ -10,6 +11,7 @@ import Recommended from "@/components/Recommended.vue";
 import History from "@/components/History.vue";
 import ItemDetail from "@/components/ItemDetail.vue";
 import { HistoryStore } from "@/components/utils/HistoryStore";
+import { hostnameKey, historyStoreKey } from "@/components/utils/DependencyInjection";
 
 const routes = [
     { path: "/", component: Explore },
@@ -25,16 +27,7 @@ const router = createRouter({
     routes,
 });
 
-const hostnameKey = Symbol() as InjectionKey<string>;
-
-export function useHostname(): string {
-    return inject(hostnameKey)!;
-}
-
-const historyStoreKey = Symbol() as InjectionKey<HistoryStore>;
-
-export function useHistoryStore(): HistoryStore {
-    return inject(historyStoreKey)!;
-}
-
-createApp(App).provide(hostnameKey, "http://127.0.0.1:8000").provide(historyStoreKey, new HistoryStore()).use(router).mount("#app");
+// TODO: try empty string for host to have relative links in dist folder
+// hostname should be "http://127.0.0.1:8000" when running locally in dev mode while also running fastAPI
+// live API is on "https://pubvis.onrender.com/" or "https://arxvis.onrender.com/"
+createApp(App).provide(hostnameKey, "http://127.0.0.1:8000").provide(historyStoreKey, new HistoryStore()).use(router).use(VueCookies).mount("#app");

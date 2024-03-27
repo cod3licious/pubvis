@@ -12,6 +12,7 @@ from src.db import Item, Rating, User, engine
 
 app = FastAPI()
 
+# TODO: remove
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

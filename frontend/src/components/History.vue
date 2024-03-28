@@ -21,7 +21,7 @@ function openItem(item: Article) {
 <template>
     <div class="root-container">
         <ItemList header="History" :articles="historyStore.get()" @article-click="openItem($event)"></ItemList>
-        <ItemDetail :item-id="itemId" v-if="itemId"></ItemDetail>
+        <ItemDetail v-model="itemId" v-if="itemId"></ItemDetail>
     </div>
 </template>
 

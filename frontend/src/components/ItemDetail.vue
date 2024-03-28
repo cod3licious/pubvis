@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
-import { useRouter } from "vue-router";
 import { fetchData, getOrSetUserIdCookie } from "@/components/utils/helpers";
 import { useHostname, useCookies, useHistoryStore } from "@/components/utils/DependencyInjection";
 import type { Article, ArticleDetail, LoadingState } from "@/components/models/types";
@@ -8,9 +7,7 @@ import ItemList from "@/components/ItemList.vue";
 import IconThumbsUp from "@/components/icons/IconThumbsUp.vue";
 import IconThumbsDown from "@/components/icons/IconThumbsDown.vue";
 
-const props = defineProps<{
-    itemId: string;
-}>();
+const itemId = defineModel<string>({ required: true });
 
 const loadingState = ref<LoadingState>("loading");
 const item = ref<ArticleDetail | null>(null);
@@ -18,15 +15,14 @@ const similarItems = ref<Article[]>([]);
 const itemRated = ref<boolean>(false);
 const hostname = useHostname();
 const cookies = useCookies();
-const router = useRouter();
 const historyStore = useHistoryStore();
 
 onMounted(() => {
-    fetchItem(props.itemId);
+    fetchItem(itemId.value);
 });
 
 watch(
-    () => props.itemId,
+    () => itemId.value,
     (newItemId) => {
         fetchItem(newItemId);
         itemRated.value = false;
@@ -76,7 +72,7 @@ function openItem(newItem: Article) {
     // add new item to history and reload history page to show new item
     // TODO: conversion to Article doesn't really work as expected, still contains all fields
     historyStore.push(newItem!);
-    router.go(0);
+    itemId.value = newItem.item_id;
 }
 </script>
 

@@ -106,16 +106,16 @@ function displayGraph(articleInfo: Record<string, Article>, mapPoints: MapDataPo
 </script>
 
 <template>
-    <div class="preloader" v-if="loadingState === 'loading'">loading...</div>
-    <div class="preloader" v-if="loadingState === 'error'">
-        <button @click="fetchDataAndUpdateUI()">reload</button>
-    </div>
     <main>
+        <div class="preloader" v-if="loadingState === 'loading'">loading...</div>
+        <div class="preloader" v-if="loadingState === 'error'">
+            <button @click="fetchDataAndUpdateUI()">reload</button>
+        </div>
+        
         <div class="map-container">
             <div class="map" ref="mapRef"></div>
         </div>
 
-        <!-- Template for Tooltip -->
         <div id="tooltip" v-if="tooltipInfo">
             <p id="journal">{{ tooltipInfo.journal }}</p>
             <h4 id="title">{{ tooltipInfo.title }}</h4>
@@ -129,6 +129,7 @@ main {
     width: 100%;
     height: 100vh;
     position: relative;
+    background-color: var(--color-background);
 }
 
 .map-container {
@@ -149,15 +150,14 @@ main {
 }
 
 .preloader {
-    color: #fff;
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    color: var(--color-text);
 }
 
 #tooltip {
-    background: #11151d;
+    background: var(--color-background-mute);
     font-size: 0.9rem;
     position: absolute;
     width: 100%;
@@ -175,8 +175,8 @@ main {
         max-width: 540px;
         margin: 0 auto 11px;
         font-size: 0.8rem;
-        font-weight: 400;
-        color: #fff;
+        font-weight: 500;
+        color: var(--color-heading);
     }
 
     p {

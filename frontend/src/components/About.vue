@@ -34,4 +34,8 @@
     </main>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+#about-text {
+    padding: 3em;
+}
+</style>

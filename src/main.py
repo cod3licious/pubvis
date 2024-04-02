@@ -107,7 +107,7 @@ def get_random(n: int = 20, session: Session = Depends(get_session)):
 
 
 @app.get("/items/search", response_model=list[ItemViewModel])
-def keyword_search(q: str, n: int = 5, session: Session = Depends(get_session)):
+def keyword_search(q: str, n: int = 20, session: Session = Depends(get_session)):
     """
     Quick keyword search on title and authors of items
 

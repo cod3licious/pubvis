@@ -74,12 +74,17 @@ function openItem(newItem: Article) {
     historyStore.push(newItem!);
     itemId.value = newItem.item_id;
 }
+
+function closeItem() {
+    itemId.value = '';
+}
 </script>
 
 <template>
     <header v-if="loadingState != 'loaded'">loading...</header>
     <div class="root-container" v-else>
         <div class="item-container">
+            <h2 @click="closeItem">X</h2>
             <main class="scroll-container">
                 <p>{{ item?.publisher }}, {{ item?.pub_year }}</p>
                 <h2>
@@ -120,6 +125,10 @@ function openItem(newItem: Article) {
     display: flex;
     flex-direction: column;
     background-color: var(--color-background);
+
+    h2 {
+        padding: 0.5rem;
+    }
 
     main {
         flex: 1;

@@ -111,7 +111,7 @@ function displayGraph(articleInfo: Record<string, Article>, mapPoints: MapDataPo
         <div class="preloader" v-if="loadingState === 'error'">
             <button @click="fetchDataAndUpdateUI()">reload</button>
         </div>
-        
+
         <div class="map-container">
             <div class="map" ref="mapRef"></div>
         </div>

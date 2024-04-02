@@ -45,6 +45,14 @@ const emit = defineEmits<{
         padding: 0.5rem;
         border: var(--color-border) solid;
         border-width: 0 0 1px 0;
+
+        h4 {
+            font-weight: 400;
+        }
+        p {
+            font-size: 0.75rem;
+            font-style: italic;
+        }
     }
 }
 </style>

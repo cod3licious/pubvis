@@ -76,7 +76,7 @@ function openItem(newItem: Article) {
 }
 
 function closeItem() {
-    itemId.value = '';
+    itemId.value = "";
 }
 </script>
 
@@ -126,8 +126,9 @@ function closeItem() {
     flex-direction: column;
     background-color: var(--color-background);
 
-    h2 {
-        padding: 0.5rem;
+    > h2 {
+        font-weight: 200;
+        padding: 0.6rem;
     }
 
     main {

@@ -39,12 +39,13 @@ class ItemViewModel(BaseModel):
     score: float | None = None
 
     @classmethod
-    def from_item(cls, item: Item, score: float | None = None):
+    def from_item(cls, item: Item, score: float | None = None, shorten_authors: bool = True):
         if item.authors:
             authors = item.authors.split(", ")
-            item.authors = ", ".join(authors[:5])
-            if len(authors) > 5:
-                item.authors += " et al."
+            if shorten_authors and len(authors) > 5:
+                item.authors = ", ".join(authors[:5]) + " et al."
+            else:
+                item.authors = ", ".join(authors)
         return cls(**item.dict(), pub_year=int(item.pub_date.split("-")[0]), score=score)
 
 
@@ -156,7 +157,7 @@ def get_item_details(item_id: str, session: Session = Depends(get_session)):
     item = session.get(Item, item_id)
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
-    return ItemViewModel.from_item(item)
+    return ItemViewModel.from_item(item, shorten_authors=False)
 
 
 @app.get("/items/{item_id}/similar", response_model=list[ItemViewModel])

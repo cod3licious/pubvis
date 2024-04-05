@@ -70,7 +70,6 @@ async function rateNo() {
 
 function openItem(newItem: Article) {
     // add new item to history and reload history page to show new item
-    // TODO: conversion to Article doesn't really work as expected, still contains all fields
     historyStore.push(newItem!);
     itemId.value = newItem.item_id;
 }

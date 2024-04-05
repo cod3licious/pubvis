@@ -2,7 +2,6 @@ import joblib
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy import func
 from sqlmodel import Session, col, or_, select
@@ -11,14 +10,6 @@ from src import SOURCE
 from src.db import Item, Rating, User, engine
 
 app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 
 VECTORIZER = None
@@ -39,12 +30,13 @@ class ItemViewModel(BaseModel):
     score: float | None = None
 
     @classmethod
-    def from_item(cls, item: Item, score: float | None = None):
+    def from_item(cls, item: Item, score: float | None = None, shorten_authors: bool = True):
         if item.authors:
             authors = item.authors.split(", ")
-            item.authors = ", ".join(authors[:5])
-            if len(authors) > 5:
-                item.authors += " et al."
+            if shorten_authors and len(authors) > 5:
+                item.authors = ", ".join(authors[:5]) + " et al."
+            else:
+                item.authors = ", ".join(authors)
         return cls(**item.dict(), pub_year=int(item.pub_date.split("-")[0]), score=score)
 
 
@@ -79,24 +71,9 @@ def get_nn_tree():
     yield NN_TREE
 
 
-@app.get("/", include_in_schema=False)
-async def read_index():
-    return FileResponse("dist/index.html")
-
-
-@app.get("/about", include_in_schema=False)
-async def read_about():
-    return FileResponse("dist/about.html")
-
-
 @app.get("/health", include_in_schema=False)
 def get_health():
     return "alive"
-
-
-@app.get("/favicon.ico", include_in_schema=False)
-async def favicon():
-    return FileResponse("dist/favicon.ico")
 
 
 @app.get("/static_json_item_info", include_in_schema=False)
@@ -122,7 +99,7 @@ def get_random(n: int = 20, session: Session = Depends(get_session)):
 
 
 @app.get("/items/search", response_model=list[ItemViewModel])
-def keyword_search(q: str, n: int = 5, session: Session = Depends(get_session)):
+def keyword_search(q: str, n: int = 20, session: Session = Depends(get_session)):
     """
     Quick keyword search on title and authors of items
 
@@ -158,6 +135,7 @@ def similarity_search(
     return [
         ItemViewModel.from_item(session.get(Item, nn_tree.item_ids_[j]), 100 * (1 - nn_distances[0, i]))
         for i, j in enumerate(nn_idx[0, : search_body.n])
+        if nn_distances[0, i] < 1
     ]
 
 
@@ -171,7 +149,7 @@ def get_item_details(item_id: str, session: Session = Depends(get_session)):
     item = session.get(Item, item_id)
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
-    return ItemViewModel.from_item(item)
+    return ItemViewModel.from_item(item, shorten_authors=False)
 
 
 @app.get("/items/{item_id}/similar", response_model=list[ItemViewModel])
@@ -252,5 +230,5 @@ def add_rating(rating_body: RatingRequestBody, session: Session = Depends(get_se
 
     session.commit()
 
-    
-app.mount("/", StaticFiles(directory="dist", html=True))
+
+app.mount("/", StaticFiles(directory="frontend/dist", html=True))

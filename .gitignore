@@ -10,4 +10,4 @@
 *.sublime-project
 *.sublime-workspace
 raw_texts/
-assets/
+assets/*

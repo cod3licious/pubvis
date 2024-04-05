@@ -59,22 +59,24 @@ async function fulltextComparisonSearch() {
     <div class="root-container">
         <ItemList header="Search Results" :articles="searchResults" @article-click="openItem($event)"></ItemList>
         <ItemDetail v-model="itemId" v-if="itemId"></ItemDetail>
-        <div class="search-container" v-else>
-            <div>
-                <label for="keyword-search">Match title or authors:</label><br />
-                <input id="keyword-search" type="text" v-model="searchTerm" @input="keywordSearch" placeholder="Enter title or author" />
-            </div>
+        <div class="content-container" v-else>
+            <div class="search-container">
+                <div>
+                    <label for="keyword-search">Match title or authors:</label><br />
+                    <input id="keyword-search" type="text" v-model="searchTerm" @input="keywordSearch" placeholder="Enter title or author" />
+                </div>
 
-            <div>
-                <label for="fulltext-comparison">Fulltext comparison with article abstract:</label><br />
-                <textarea
-                    id="fulltext-comparison"
-                    rows="20"
-                    cols="60"
-                    v-model="searchText"
-                    @input="fulltextComparisonSearch"
-                    placeholder="Enter an abstract for a fulltext search"
-                ></textarea>
+                <div>
+                    <label for="fulltext-comparison">Fulltext comparison with article abstract:</label><br />
+                    <textarea
+                        id="fulltext-comparison"
+                        rows="20"
+                        cols="60"
+                        v-model="searchText"
+                        @input="fulltextComparisonSearch"
+                        placeholder="Enter an abstract for a fulltext search"
+                    ></textarea>
+                </div>
             </div>
         </div>
     </div>
@@ -85,27 +87,32 @@ async function fulltextComparisonSearch() {
     display: flex;
     flex-direction: row;
     height: 100vh;
+    width: 100%;
 
     > aside {
         border: var(--color-border) solid;
         border-right-width: 1px;
     }
 
+    > .content-container {
+        flex-grow: 1;
+        display: flex;
+    }
+
     .search-container {
         display: flex;
+        width: fit-content;
         flex-direction: column;
         margin: auto;
+        justify-content: center;
 
-        div {
+        > div {
             margin: 0.5rem;
         }
 
-        input {
-            width: 30rem;
-
-            #fulltext-comparison {
-                height: 40rem;
-            }
+        input,
+        textarea {
+            width: 100%;
         }
     }
 }

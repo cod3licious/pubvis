@@ -143,7 +143,7 @@ def similarity_search(
     nn_distances, nn_idx = nn_tree.kneighbors(X)
     return [
         ItemViewModel.from_item(session.get(Item, nn_tree.item_ids_[j]), 100 * (1 - nn_distances[0, i]))
-        for i, j in enumerate(nn_idx[0, : search_body.n])
+        for i, j in enumerate(nn_idx[0, : search_body.n]) if nn_distances[0, i] < 1
     ]
 
 

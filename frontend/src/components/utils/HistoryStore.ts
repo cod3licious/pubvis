@@ -11,6 +11,7 @@ export class HistoryStore {
 
     push(item: Article) {
         const history = this.get().filter((article: Article) => article.item_id !== item.item_id);
+        item.score = undefined;
         history.unshift(item);
         this.store.setItem(this.key, JSON.stringify(history));
     }

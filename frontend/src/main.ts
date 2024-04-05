@@ -30,4 +30,4 @@ const router = createRouter({
 // TODO: try empty string for host to have relative links in dist folder
 // hostname should be "http://127.0.0.1:8000" when running locally in dev mode while also running fastAPI
 // live API is on "https://pubvis.onrender.com" or "https://arxvis.onrender.com"
-createApp(App).provide(hostnameKey, "http://127.0.0.1:8000").provide(historyStoreKey, new HistoryStore()).use(router).use(VueCookies).mount("#app");
+createApp(App).provide(hostnameKey, "").provide(historyStoreKey, new HistoryStore()).use(router).use(VueCookies).mount("#app");

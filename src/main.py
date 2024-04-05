@@ -1,6 +1,5 @@
 import joblib
 from fastapi import Depends, FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
@@ -11,15 +10,6 @@ from src import SOURCE
 from src.db import Item, Rating, User, engine
 
 app = FastAPI()
-
-# TODO: remove
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 VECTORIZER = None
 NN_TREE = None

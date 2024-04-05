@@ -135,6 +135,10 @@ function closeItem() {
         flex: 1;
         padding: 1rem;
 
+        > h2 {
+            color: var(--color-text-link);
+        }
+
         .item-authors {
             text-align: center;
             font-style: italic;

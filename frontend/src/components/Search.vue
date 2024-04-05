@@ -62,12 +62,12 @@ async function fulltextComparisonSearch() {
         <div class="content-container" v-else>
             <div class="search-container">
                 <div>
-                    <label for="keyword-search">Match title or authors:</label><br />
+                    <label for="keyword-search">Match in title or authors:</label><br />
                     <input id="keyword-search" type="text" v-model="searchTerm" @input="keywordSearch" placeholder="Enter title or author" />
                 </div>
 
                 <div>
-                    <label for="fulltext-comparison">Fulltext comparison with article abstract:</label><br />
+                    <label for="fulltext-comparison">Fulltext match in article abstract:</label><br />
                     <textarea
                         id="fulltext-comparison"
                         rows="20"

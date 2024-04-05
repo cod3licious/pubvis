@@ -65,6 +65,7 @@ const emit = defineEmits<{
 
         h4 {
             font-weight: 400;
+            color: var(--color-text-link);
         }
         p {
             font-size: 0.75rem;

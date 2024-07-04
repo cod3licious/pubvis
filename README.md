@@ -13,8 +13,6 @@ If any of this code was helpful for your research, please consider citing it:
 
 If you have any questions please don't hesitate to send me an [email](mailto:cod3licious@gmail.com) and of course if you should find any bugs or want to contribute other improvements, pull requests are very welcome!
 
-This project was a collaboration with [Dmitry Monin](https://www.linkedin.com/in/dmitry-monin-72624176/), who designed and implemented the frontend.
-
 
 ## Quick start
 
@@ -56,3 +54,8 @@ npm run build
 uvicorn src.main:app --reload
 ```
 Open your browser at http://127.0.0.1:8000/ to see the results.
+
+
+### Acknowledgements
+
+This project was initially a collaboration with [Dmitry Monin](https://www.linkedin.com/in/dmitry-monin-72624176/), who designed and implemented the original frontend. The frontend of the current version was implemented with the help of [Marcel Lengert](https://www.linkedin.com/in/marcel-lengert/).

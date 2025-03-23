@@ -23,29 +23,29 @@ If you have any questions please don't hesitate to send me an [email](mailto:cod
 uv sync
 ```
 
-3.) Optional: Run tests:
-```
-uv run poe test
-```
+3.) Optional: By default we're working with PubMed articles; if you want to work with arXiv articles instead, set `SOURCE = "arxiv"` in `src/__init__.py`.
 
-4.) Optional: By default we're working with PubMed articles; if you want to work with arXiv articles instead, set `SOURCE = "arxiv"` in `src/__init__.py`.
-
-5.) Download the articles (either from pubmed or arxiv):
+4.) Download the articles (either from pubmed or arxiv):
 ```
 uv run python src/utils/download_articles.py
 ```
 This will create a folder `raw_texts/pubmed` inside the pubvis folder in which the downloaded articles are saved as json files (this will take a while).
 
-6.) Create the database and trained models (in `src/static/assets`), and two json files (in `src/static/json`) for the frontend from the downloaded articles:
+5.) Create the database and trained models (in `src/static/assets`), and two json files (in `src/static/json`) for the frontend from the downloaded articles:
 ```
 uv run python src/utils/setup.py
 ```
 
-7.) Install frontend dependencies and build (create dist folder; requires node.js and npm installation):
+6.) Install frontend dependencies and build (create dist folder; requires node.js and npm installation):
 ```
 cd fronted
 npm i
 npm run build
+```
+
+7.) Optional: Run tests (requires `frontend/dist/` exists):
+```
+uv run poe test
 ```
 
 8.) Run the FastAPI app locally (from the root folder):

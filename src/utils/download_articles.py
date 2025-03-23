@@ -136,7 +136,7 @@ def download_arxiv(json_dir="raw_texts/arxiv", max_articles=10000):
     for i in range(start_index, max_index, results_per_iteration):
         # get all articles
         arxiv_url = arxiv_baseurl + f"&start={i}&max_results={results_per_iteration}"
-        urlreq = urllib.request.Request(arxiv_url, None, {"User-Agent": f"python-arxiv{randint(i, i+100)}"})
+        urlreq = urllib.request.Request(arxiv_url, None, {"User-Agent": f"python-arxiv{randint(i, i + 100)}"})
         response = urllib.request.urlopen(urlreq).read()
         parse = feedparser.parse(response)
         if not parse.entries:

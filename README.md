@@ -18,28 +18,27 @@ If you have any questions please don't hesitate to send me an [email](mailto:cod
 
 1.) Open a terminal in the pubvis repo folder.
 
-2.) Install all required packages and activate the virtual env (assumes an existing python 3 and poetry installation):
+2.) Install all required packages (assumes an existing uv installation):
 ```
-poetry install
-poetry shell
+uv sync
 ```
 
 3.) Optional: Run tests:
 ```
-poetry run poe test
+uv run poe test
 ```
 
 4.) Optional: By default we're working with PubMed articles; if you want to work with arXiv articles instead, set `SOURCE = "arxiv"` in `src/__init__.py`.
 
 5.) Download the articles (either from pubmed or arxiv):
 ```
-python src/utils/download_articles.py
+uv run python src/utils/download_articles.py
 ```
 This will create a folder `raw_texts/pubmed` inside the pubvis folder in which the downloaded articles are saved as json files (this will take a while).
 
 6.) Create the database and trained models (in `src/static/assets`), and two json files (in `src/static/json`) for the frontend from the downloaded articles:
 ```
-python src/utils/setup.py
+uv run python src/utils/setup.py
 ```
 
 7.) Install frontend dependencies and build (create dist folder; requires node.js and npm installation):
@@ -51,7 +50,7 @@ npm run build
 
 8.) Run the FastAPI app locally (from the root folder):
 ```
-uvicorn src.main:app --reload
+uv run uvicorn src.main:app --reload
 ```
 Open your browser at http://127.0.0.1:8000/ to see the results.
 
